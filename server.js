@@ -4,6 +4,9 @@ class Kunde{
 		this.Nachname
 		this.Vorname
 		this.Benutzername
+		
+		// Aufgabe 6: Ergänze Eigenschaft Email
+		this.Email
 		this.Kennwort
 		// IstEingeloggt ist ein boolean.
 		// Der Wert ist entweder wahr oder falsch.
@@ -18,6 +21,7 @@ let kunde = new Kunde();
 kunde.Nachname = "Kiff"
 kunde.Vorname = "Pit"
 kunde.Benutzername = "pk"
+kunde.Email = "pit@kiff.de"
 kunde.Kennwort = "123"
 kunde.IstEingeloggt = false
 
@@ -160,15 +164,26 @@ app.get('/agb', (req, res) => {
 
 	if(kunde.IstEingeloggt){
 
-		// Wenn die Zugangsdaten korrekt sind, dann wird die angesurfte Seite gerendert.
-		res.render('login.ejs',{});
+		// Die res.render muss zwischen if und else getauscht werden.
+		// Wenn der Kunde eingeloggt ist, wird die agb-Seite gerendert.
+		// Wenn die Zugangsdaten nicht korrekt sind, dann wird er zur login zurückgeworfen.
 
-	}else{
-		
 		// Wenn die Zugangsdaten nicht korrekt sind, dann wird die login-Seite gerendert.
 		res.render('agb.ejs',{
 			Meldung: "Melden Sie sich zuerst an."
 		});
+
+		// Wenn die Zugangsdaten korrekt sind, dann wird die angesurfte Seite gerendert.
+		//res.render('login.ejs',{});
+
+	}else{
+		
+		// Wenn die Zugangsdaten nicht korrekt sind, dann wird die login-Seite gerendert.
+		//res.render('agb.ejs',{
+		//	Meldung: "Melden Sie sich zuerst an."
+		//});
+
+		res.render('login.ejs',{});
 	}
 });
 
@@ -240,7 +255,7 @@ app.post('/profil', (req, res) => {
 
 			console.log("Gültige EMail.")
 			meldung = "EMail-adresse gültig";
-			kunde.Mail = email;
+			kunde.Email = email;
 
 		}else{
 			console.log("Ungültige EMail.")
@@ -263,7 +278,18 @@ app.post('/profil', (req, res) => {
 });
 
 app.get('/postfach', (req, res) => {
-	res.render('postfach.ejs',{});
+
+	// Es fehlt die Prüfung, mit der geprüft wird, ob der Kunde eingeloggt ist.
+	if(kunde.IstEingeloggt){
+
+		// Wenn die Zugangsdaten korrekt sind, dann wird die angesurfte Seite gerendert.
+		res.render('postfach.ejs',{});
+	}else{
+		// Wenn die Zugangsdaten nicht korrekt sind, dann wird die login-Seite gerendert.
+		res.render('login.ejs',{
+			Meldung: "Melden Sie sich zuerst an."
+		});
+	}
 });
 
 // Sobald die Seite "Kredit beantragen" aufgerufen wird, wird die app.get abgearbeitet.
@@ -345,7 +371,7 @@ app.get('/geldAnlegen', (req, res) => {
 	
 			Betrag:120,
 			Laufzeit:2,
-			Meldung: ""
+			Meldung: "Der Zinssatz beträgt immer 10%."
 		})
 
 	}else{
@@ -373,7 +399,9 @@ app.post('/geldAnlegen', (req, res) => {
 
 	let zinssatz = 0.1
 
-	let zinsen = betrag * zinssatz;
+	// Berechnung der Zinsen unter Berücksichtigung von Zinseszinsen
+	let endbetrag = betrag * Math.pow(1 + zinssatz, laufzeit);
+	let zinsen = endbetrag - betrag;
 
 
 	if(kunde.IstEingeloggt){

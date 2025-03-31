@@ -21,6 +21,10 @@
         <a href="login"><i class="fa fa-sign-out"></i> Abmelden</a>
     </header>
     <main>
+        <!-- Die Überschrift muss h1 heißen. h gibt es al Tag nicht.
+         Auf der gerenderten Seite erkennn wird den Fehler daran,
+         dass Kunden-Support keinen Style hat. Eigentlich ist bei H1 die
+         Größe und Farbe und Schriftart definiert.-->
         <h>Kunden-Support - Borken-Bank AG</h>
 
         <p>Für Unterstützung und Beratung steht Ihnen unser Kundenberater Pit Kiff gerne zur Verfügung.</p>
@@ -28,7 +32,13 @@
 
         <h2>Kontaktinformationen:</h2>
         <ul>
+            <!--Die Telefonnummer wird nicht angezeigt-->
             <li>Telefon: <a href="tel:0123457890000">012345/7890000</a></li>
+            
+            <!--  Der Ausdruck 'E-Mail-Adresse:' macht keinen Sinn. Es muss entweder
+              der Ausdruck weggelassen werden oder durch mailto: ersetzt werden.  
+              Es muss dann heißen: mailto:p.kiff@borken-bank.de?
+              -->
             <li>E-Mail: <a href="E-Mail-Adresse:p.kiff@borken-bank.de">p.kiff@borken-bank.de</a></li>
         </ul>
 
@@ -39,7 +49,13 @@
     <footer>
         <p>Borken-Bank AG</p>
         <p>Geschäftsführer: Hans Dampf, IBAN: DE 55 28 000 000</p>
+        
+        <!-- Der Link und die Beschreibung müssen getauscht werden. -->
         <a href="Zur Homepage">https://www.borken-bank.de</a> 
-    <footer>
+    
+        <!-- Der Schrägstrich (auch Slash genannt) fehlt beim schließenden
+         footer-Tag. Das schließende Tag hat immer einen Slash vor dem Namen. -->
+    
+        <footer>
 </body>
 </html>
